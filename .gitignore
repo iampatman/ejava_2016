@@ -14,4 +14,7 @@ hs_err_pid*
 /week03_ca/dist/
 .DS_Store
 .idea/
-
+week03_ca/nbproject/ant-deploy.xml
+week03_ca/setup/
+week03_ca/src/java/
+week03_ca/test/
