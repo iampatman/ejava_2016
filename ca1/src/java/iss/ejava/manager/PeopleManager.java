@@ -16,7 +16,6 @@ public class PeopleManager {
     }
     
     public Optional<People> findByEmail(final String email){
-//        TypedQuery<People> query = em.createNamedQuery("People.findByEmail", People.class);
         return em.createQuery("select p from People p where p.email = :email", People.class)
                  .setParameter("email", email)
                  .getResultList()
