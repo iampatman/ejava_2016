@@ -18,3 +18,9 @@ week03_ca/nbproject/ant-deploy.xml
 week03_ca/setup/
 week03_ca/src/java/
 week03_ca/test/
+/week3_ca/build/
+/week3_ca/nbproject/private/
+/week3_ca/web/bower_components/
+/ca1/build/
+/ca1/nbproject/private/
+/ca1/web/bower_components/
