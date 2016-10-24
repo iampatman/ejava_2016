@@ -4,17 +4,13 @@ import iss.ejava.manager.AppointmentManager;
 import iss.ejava.manager.PeopleManager;
 import iss.ejava.model.Appointment;
 import iss.ejava.model.People;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -49,7 +45,6 @@ public class AppointmentResource {
                     .add("description", app.getDescription())
                     .add("appointmentId", app.getApppointmentId()).build());
         });
-            
         return Response.ok(array.build()).build();
     }
 
@@ -58,8 +53,7 @@ public class AppointmentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response add(MultivaluedMap<String, String> form) {
         Appointment app = new Appointment();
-        Date date = new Date(Long.valueOf(form.getFirst("date")));
-        app.setApptDate(date);
+        app.setApptDate(new Date(Long.valueOf(form.getFirst("date"))));
         app.setDescription(form.getFirst("description"));
         Optional<People> opt = pm.findByEmail(form.getFirst("email"));
         if (!opt.isPresent()) {
