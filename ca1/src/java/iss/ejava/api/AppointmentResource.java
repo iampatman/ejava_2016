@@ -7,7 +7,9 @@ import iss.ejava.model.People;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -18,6 +20,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -25,7 +29,10 @@ import javax.ws.rs.core.Response;
 @RequestScoped
 @Path("/appointment")
 public class AppointmentResource {
-
+    
+    @Resource(lookup = "concurrent/myThreadpool")
+    ManagedExecutorService service;
+    
     @EJB
     private AppointmentManager am;
     @EJB
@@ -34,18 +41,9 @@ public class AppointmentResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{email}")
-    public Response get(@PathParam("email") String email) {
-        List<Appointment> appointments = am.findByPeople(email);
-        JsonArrayBuilder array = Json.createArrayBuilder();
-        appointments.stream().forEach(app -> {
-            System.out.println(app.toString());
-            JsonObjectBuilder appObj = Json.createObjectBuilder();
-            array.add(appObj.add("personId", app.getPeople().getPersonId())
-                    .add("dateTime", app.getApptDate().getTime())
-                    .add("description", app.getDescription())
-                    .add("appointmentId", app.getApppointmentId()).build());
-        });
-        return Response.ok(array.build()).build();
+    public void get(@PathParam("email") String email, @Suspended AsyncResponse resp) {
+        AppointmentTask task = new AppointmentTask(resp, email, am);
+        service.execute(task);
     }
 
     @POST
