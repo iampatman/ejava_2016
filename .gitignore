@@ -10,18 +10,13 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/week03_ca/build/
-/week03_ca/dist/
 .DS_Store
 .idea/
-week03_ca/nbproject/ant-deploy.xml
-week03_ca/setup/
-week03_ca/src/java/
-week03_ca/test/
-/week3_ca/build/
-/week3_ca/nbproject/private/
-/week3_ca/web/bower_components/
 /ca1/build/
 /ca1/nbproject/private/
 /ca1/web/bower_components/
 /ca1/dist/
+/ca2/build/
+/ca2/nbproject/private/
+/ca2/web/bower_components/
+/ca2/dist/
