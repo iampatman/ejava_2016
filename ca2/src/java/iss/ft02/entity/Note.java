@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Table(name = "notes")
 @NamedQueries({
 @NamedQuery(name = "Note.findAllNotes", query = "Select n from Note n"),
-@NamedQuery(name = "Note.findAllNotesByUser", query = "Select n from Note n where n.user = :userid")})
+@NamedQuery(name = "Note.findAllNotesByUser", query = "Select n from Note n where n.user.userid = :userid")})
 public class Note implements Serializable{
     @Id
     private int id;

@@ -13,13 +13,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -51,7 +49,7 @@ public class NoteView implements Serializable {
         System.out.println(" >>>>>>>>>> " + name);
         user = rb.findUserById(name);
         System.out.println(user.toString());
-        notes = nb.findAll();
+        notes = nb.findAllByUser(user.getUserid());
     }
 
     public void postNote() { 
@@ -61,12 +59,13 @@ public class NoteView implements Serializable {
         note.setCategory(getCategory());
         note.setContent(getContent());
         nb.add(note);
-        notes = nb.findAll();
+        notes = nb.findAllByUser(user.getUserid());
         title = "";
         category = "";
         content = "";
     }
 
+    
     /**
      * @return the nb
      */
