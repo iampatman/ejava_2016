@@ -16,6 +16,18 @@ create table groups (
 	primary key (groupid, userid)
 ) engine=InnoDB default charset=utf8;
 
+CREATE TABLE authdb.notes
+(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50),
+    datetime TIMESTAMP,
+    user VARCHAR(32),
+    category VARCHAR(10),
+    content VARCHAR(200),
+    CONSTRAINT notes_users_userid_fk FOREIGN KEY (user) REFERENCES users (userid)
+);
+
+
 /*
 	Create jdbcRealm
 	Add jdbc connection pool and jdbc resource
