@@ -41,7 +41,7 @@ public class LoginView implements Serializable {
 			return (null);
 		}
 
-		return ("secure/menu");
+		return ("secure/notes");
 	}
 
 }

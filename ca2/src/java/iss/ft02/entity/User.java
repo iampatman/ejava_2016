@@ -1,22 +1,23 @@
 package iss.ft02.entity;
 
-import javax.persistence.Basic;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
+
     @Id
     private String userid;
-    
-    @Basic
+
     private String password;
 
     public String getUserid() {
         return userid;
     }
+
     public void setUserid(String userid) {
         this.userid = userid;
     }
@@ -24,9 +25,16 @@ public class User {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Username: " + userid;//To change body of generated methods, choose Tools | Templates.
+    }
+
     
-    
+
 }

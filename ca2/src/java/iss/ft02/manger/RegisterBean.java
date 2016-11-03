@@ -14,4 +14,10 @@ public class RegisterBean {
     public void register(User user){
         em.persist(user);
     }
+    
+    public User findUserById(String id){
+        System.out.println(" >>>>>>> id = " + id);
+        User user = em.find(User.class, id);
+        return user;
+    }
 }
