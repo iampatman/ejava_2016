@@ -33,10 +33,13 @@ public class NoteDisplaySocket {
 
     private static Set<Session> sessions = ConcurrentHashMap.newKeySet();
 
+    @EJB NotesBean nb;
+    
     @OnOpen
     public void open(Session session) {
         System.out.println(">>> new session: " + session.getId());
         sessions.add(session);
+        NoteDisplaySocket.broadcastNotes(nb.findAll());
 
     }
 
@@ -53,10 +56,9 @@ public class NoteDisplaySocket {
                 return;
             }
             JsonArrayBuilder builder = Json.createArrayBuilder();
-            notes.stream()
-                    .forEach((note) -> {
-                        builder.add(note.toJson());
-                    });
+            notes.forEach((note) -> {
+                builder.add(note.toJson());
+            });
             JsonArray array = builder.build();
             sessions.stream().
                     forEach(session -> {

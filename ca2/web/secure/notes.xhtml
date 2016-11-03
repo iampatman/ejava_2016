@@ -11,6 +11,9 @@
         <h1>
             Notes Manager
         </h1>
+        <h2>
+            Current user: <h:outputLabel value="#{noteView.user.userid}"/>
+        </h2>
         <h:form id="form">
             <h:panelGrid columns="2">
                 Title <h:inputText value="#{noteView.title}" required="true"/>

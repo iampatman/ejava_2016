@@ -45,9 +45,9 @@ public class Note implements Serializable {
     public JsonObject toJson() {
         return Json.createObjectBuilder()
                 .add("title", title)
-                .add("content", "content")
+                .add("content", content)
                 .add("category", category)
-                .add("userid", user.getUserid()).build();
+                .add("user", user.getUserid()).build();
 
     }
 
