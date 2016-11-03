@@ -1,6 +1,8 @@
 package iss.ft02.view;
 
+import iss.ft02.entity.GroupPK;
 import iss.ft02.entity.User;
+import iss.ft02.manger.GroupBean;
 import iss.ft02.manger.RegisterBean;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -18,6 +20,9 @@ public class RegisterView {
     
     @EJB
     RegisterBean registerBean;
+    
+    @EJB 
+    private GroupBean groupBean;
 
     public String getUserid() {
         return userid;
@@ -33,7 +38,8 @@ public class RegisterView {
         this.password = password;
     }
 
-    public void register() {
+    public String register() {
+
         String pwd = "";
          try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -46,10 +52,18 @@ public class RegisterView {
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             System.out.println(">>> Exception in digest password" + ex.getMessage());
         }
-        
+        //Add new user
         User user = new User();
         user.setUserid(userid);
         user.setPassword(pwd);
         registerBean.register(user);
+        //Add new user with group to Groups table
+        GroupPK pk = new GroupPK();
+        pk.setGroupid("user");
+        pk.setUserid(userid);
+        groupBean.add(pk);
+        userid = "";
+        password = "";
+        return "login";
     } 
 }

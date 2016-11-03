@@ -23,7 +23,7 @@
                     <f:ajax execute="@form" render="@form"></f:ajax>
                 </h:commandButton>
             </h:panelGrid>
-            <h:outputLabel rendered="#{noteView.notes.size() eq 0}" value="No notes"></h:outputLabel>
+            <h:outputLabel rendered="#{noteView.notes.size() eq 0}" value="Please add the first note"></h:outputLabel>
             <h:dataTable rendered="#{noteView.notes.size() gt 0}" value="#{noteView.notes}" var="note">
                 <h:column>
                     <f:facet name="header">Title</f:facet>

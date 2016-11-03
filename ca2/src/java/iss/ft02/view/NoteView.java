@@ -7,6 +7,7 @@ package iss.ft02.view;
 
 import iss.ft02.entity.Note;
 import iss.ft02.entity.User;
+import iss.ft02.manger.NoteDisplaySocket;
 import iss.ft02.manger.NotesBean;
 import iss.ft02.manger.RegisterBean;
 import java.io.Serializable;
@@ -14,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -26,13 +29,13 @@ import javax.inject.Named;
 @SessionScoped
 @Named
 public class NoteView implements Serializable {
-
+    
+    
     @EJB
     private RegisterBean rb;
     
     @EJB
     private NotesBean nb;
-    
     
 
     private List<Note> notes = new ArrayList<>();
@@ -63,6 +66,7 @@ public class NoteView implements Serializable {
         title = "";
         category = "";
         content = "";
+        NoteDisplaySocket.broadcastNotes(nb.findAll());
     }
 
     

@@ -10,10 +10,10 @@
         <h:form>
             <h:panelGrid columns="2">
                 Username:
-                <h:inputText value="#{registerView.userid}"/>
+                <h:inputText value="#{registerView.userid}" required="true"/>
 
                 Password:
-                <h:inputSecret value="#{registerView.password}"/>
+                <h:inputSecret value="#{registerView.password}" required="true"/>
 
                 <h:panelGroup/>
                 <h:commandButton value="Register" action="#{registerView.register()}"/>

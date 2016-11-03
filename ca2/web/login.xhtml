@@ -10,13 +10,13 @@
         <h:form>
             <h:panelGrid columns="2">
                 Username:
-                <h:inputText value="#{loginView.username}"/>
+                <h:inputText value="#{loginView.username}" required="true"/>
 
                 Password:
-                <h:inputSecret value="#{loginView.password}"/>
+                <h:inputSecret value="#{loginView.password}" required="true"/>
 
                 <h:commandButton value="Login" action="#{loginView.login()}"/>
-                <h:commandButton value="Register" action="register"/>
+                <h:commandButton value="Register" action="register" immediate="true"/>
             </h:panelGrid>
         </h:form>
     </h:body>
