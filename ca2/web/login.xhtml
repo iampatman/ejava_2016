@@ -8,15 +8,16 @@
     <h:body>
         <h1>Login</h1>
         <h:form>
-            <h:panelGrid columns="2">
+            <h:panelGrid columns="3">
                 Username:
-                <h:inputText value="#{loginView.username}"/>
-
+                <h:inputText id="id" requiredMessage="Username is required" value="#{loginView.username}" required="true"/>
+                <h:message for="id"/>
+                    
                 Password:
-                <h:inputSecret value="#{loginView.password}"/>
-
-                <h:panelGroup/>
+                <h:inputSecret id="pwd" requiredMessage="Password is required" value="#{loginView.password}" required="true"/>
+                <h:message for="pwd"/>
                 <h:commandButton value="Login" action="#{loginView.login()}"/>
+                <h:commandButton value="Register" action="register" immediate="true"/>
             </h:panelGrid>
         </h:form>
     </h:body>

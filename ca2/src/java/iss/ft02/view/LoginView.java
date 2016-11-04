@@ -40,8 +40,9 @@ public class LoginView implements Serializable {
 					.addMessage(null, new FacesMessage("Incorrect login"));
 			return (null);
 		}
-
-		return ("secure/notes");
+                username = "";
+                password = "";
+		return ("secure/notes?faces-redirect=true");
 	}
 
 }

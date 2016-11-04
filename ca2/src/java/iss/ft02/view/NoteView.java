@@ -7,6 +7,7 @@ package iss.ft02.view;
 
 import iss.ft02.entity.Note;
 import iss.ft02.entity.User;
+import iss.ft02.manger.NoteDisplaySocket;
 import iss.ft02.manger.NotesBean;
 import iss.ft02.manger.RegisterBean;
 import java.io.Serializable;
@@ -14,7 +15,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -32,30 +32,27 @@ public class NoteView implements Serializable {
 
     @EJB
     private RegisterBean rb;
-    
+
     @EJB
     private NotesBean nb;
-    
-    
 
     private List<Note> notes = new ArrayList<>();
     private String title;
     private String content;
-    private List<String> categories = Arrays.asList("Social", "ForSale","Jobs","Tuitions");
+    private List<String> categories = Arrays.asList("Social", "ForSale", "Jobs", "Tuitions");
     private String category;
     private User user;
-    
-    
+
     @PostConstruct
     public void NoteView() {
         String name = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         System.out.println(" >>>>>>>>>> " + name);
         user = rb.findUserById(name);
         System.out.println(user.toString());
-        notes = nb.findAll();
+        notes = nb.findAllByUser(user.getUserid());
     }
 
-    public void postNote() { 
+    public void postNote() {
         Note note = new Note();
         note.setTitle(getTitle());
         note.setUser(user);
@@ -64,10 +61,22 @@ public class NoteView implements Serializable {
         java.util.Date date= new java.util.Date();
         note.setDatetime(new Timestamp(date.getTime()));
         nb.add(note);
-        notes = nb.findAll();
+        notes = nb.findAllByUser(user.getUserid());
         title = "";
         category = "";
         content = "";
+        NoteDisplaySocket.broadcastNotes(nb.findAll());
+    }
+
+    public void logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        try {
+            ((HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest()).logout();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

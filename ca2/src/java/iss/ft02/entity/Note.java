@@ -6,7 +6,10 @@
 package iss.ft02.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,12 +25,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "notes")
 @NamedQueries({
-@NamedQuery(name = "Note.findAllNotes", query = "Select n from Note n"),
-@NamedQuery(name = "Note.findAllNotesByUser", query = "Select n from Note n where n.user = :userid")})
-public class Note implements Serializable{
+    @NamedQuery(name = "Note.findAllNotes", query = "Select n from Note n")
+    ,
+@NamedQuery(name = "Note.findAllNotesByUser", query = "Select n from Note n where n.user.userid = :userid ORDER BY n.datetime DESC")})
+public class Note implements Serializable {
+
     @Id
     private int id;
-    
+
     private String title;
     private Timestamp datetime;
     private String content;
@@ -36,6 +41,16 @@ public class Note implements Serializable{
     @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "userid")
     private User user;
+
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+                .add("title", title)
+                .add("content", content)
+                .add("category", category)
+                .add("user", user.getUserid()).build();
+
+    }
+
     /**
      * @return the id
      */
@@ -49,8 +64,6 @@ public class Note implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-
-
 
     /**
      * @return the title
@@ -121,7 +134,5 @@ public class Note implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
-    
-    
-    
+
 }
