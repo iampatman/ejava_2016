@@ -20,50 +20,57 @@ import javax.websocket.server.ServerEndpoint;
 @RequestScoped
 @ServerEndpoint("/note")
 public class NoteSocket {
-        @EJB
-        private SocketBean socketBean;
-        
-        @Resource(lookup = "concurrent/myThreadPool")
-	private ManagedScheduledExecutorService executor;
-        
-        private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
-        
-    	@OnOpen
-	public void open(Session session) {
-		System.out.println(">>> new session: " + session.getId());
-                sessions.add(session);
-	}
-        
-        @OnClose
-        public void close(Session session) {
-            System.out.println(">>> Close session: " + session.getId());
-            sessions.remove(session);
-        }
-        
-        @OnMessage
-        public void message(final Session session, final String message) {
-            System.out.println(">>> message: " + message);
-            socketBean.findAllNote();
-        }
-        
-        public void broadcastMessage(@Observes JsonObject event) {
-            System.out.println(">>> Event received: " + event.toString());
-            
-            executor.submit(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(">>> In thread");
-                    synchronized(sessions) {
-                        for (Session s: sessions)
+
+    @EJB
+    private SocketBean socketBean;
+
+    @Resource(lookup = "concurrent/myThreadPool")
+    private ManagedScheduledExecutorService executor;
+
+    private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
+
+    @OnOpen
+    public void open(Session session) {
+        System.out.println(">>> new session: " + session.getId());
+        sessions.add(session);
+    }
+
+    @OnClose
+    public void close(Session session) {
+        System.out.println(">>> Close session: " + session.getId());
+        sessions.remove(session);
+    }
+
+    @OnMessage
+    public void message(final Session session, final String message) {
+        System.out.println(">>> message: " + message);
+        socketBean.findAllNote();
+    }
+
+    public void broadcastMessage(@Observes JsonObject event) {
+        System.out.println(">>> Event received: " + event.toString());
+
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(">>> In thread");
+                synchronized (sessions) {
+                    for (Session s : sessions) {
+                        try {
+                            s.getBasicRemote().sendText(event.toString());
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
                             try {
-                                    s.getBasicRemote().sendText(event.toString());
-                            } catch(IOException ex) {
-                                    try { s.close(); } catch (IOException e) { }
+                                s.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
+                        }
                     }
                 }
-            });
-            
-            System.out.println(">>> Exit event ");
-        }
+            }
+        });
+
+        System.out.println(">>> Exit event ");
+    }
 }
