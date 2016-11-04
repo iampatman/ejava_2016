@@ -7,7 +7,6 @@ package iss.ft02.view;
 
 import iss.ft02.entity.Note;
 import iss.ft02.entity.User;
-import iss.ft02.manger.NoteDisplaySocket;
 import iss.ft02.manger.NotesBean;
 import iss.ft02.manger.RegisterBean;
 import java.io.Serializable;
@@ -65,7 +64,6 @@ public class NoteView implements Serializable {
         title = "";
         category = "";
         content = "";
-        NoteDisplaySocket.broadcastNotes(nb.findAll());
     }
 
     public void logout() {
