@@ -48,13 +48,22 @@ public class NoteSocket {
         
         public void broadcastMessage(@Observes JsonObject event) {
             System.out.println(">>> Event received: " + event.toString());
-            synchronized(sessions) {
-                for (Session s: sessions)
-                    try {
-                            s.getBasicRemote().sendText(event.toString());
-                    } catch(IOException ex) {
-                            try { s.close(); } catch (IOException e) { }
+            
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(">>> In thread");
+                    synchronized(sessions) {
+                        for (Session s: sessions)
+                            try {
+                                    s.getBasicRemote().sendText(event.toString());
+                            } catch(IOException ex) {
+                                    try { s.close(); } catch (IOException e) { }
+                            }
                     }
-            }
+                }
+            });
+            
+            System.out.println(">>> Exit event ");
         }
 }
