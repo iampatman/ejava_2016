@@ -34,7 +34,7 @@ public class SocketBean {
         return Json.createObjectBuilder()
                     .add("title", note.getTitle())
                     .add("category", note.getCategory())
-                    .add("datetime", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(note.getDatetime()))
+                    .add("datetime", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(note.getDatetime()))
                     .add("content", note.getContent())
                     .add("user", note.getUser().getUserid())
                     .build();

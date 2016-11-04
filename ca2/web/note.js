@@ -6,13 +6,13 @@ noteApp.controller('noteController', ['$scope', function($scope) {
         
         $scope.category = {};
         $scope.category.type = {
-            ALL: 'All',
+            ALL: '!!',
             SOCIAL: 'Social',
             FOR_SALE: 'ForSale',
             JOBS: 'Jobs',
             TUTION: 'Tuition'
         }
-        $scope.category.value = $scope.category.type.ALL;
+        $scope.category.filter = $scope.category.type.ALL;
         
         var socket = new WebSocket($scope.url);
         
