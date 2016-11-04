@@ -55,7 +55,10 @@
                 <td>{{ n.datetime }}</td>
                 <td>{{ n.user }}</td>
                 <td>{{ n.category }}</td>
-                <td>{{ n.content }}</td>
+                <td>
+                    <textarea style="border: none; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" readonly> {{ n.content }}
+                    </textarea>
+                </td>
             </tr>
             </table>
         </div>
