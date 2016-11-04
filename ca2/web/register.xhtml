@@ -8,13 +8,15 @@
     <h:body>
         <h1>Register</h1>
         <h:form>
-            <h:panelGrid columns="2">
+            <h:panelGrid columns="3">
                 Username:
-                <h:inputText value="#{registerView.userid}" required="true"/>
+                <h:inputText id="id" requiredMessage="Username is required" value="#{registerView.userid}" required="true"/>
+                <h:message for="id"/>
 
                 Password:
-                <h:inputSecret value="#{registerView.password}" required="true"/>
-
+                <h:inputSecret id="pwd" requiredMessage="Password is required" value="#{registerView.password}" required="true"/>
+                <h:message for="pwd"/>
+                    
                 <h:panelGroup/>
                 <h:commandButton value="Register" action="#{registerView.register()}"/>
             </h:panelGrid>

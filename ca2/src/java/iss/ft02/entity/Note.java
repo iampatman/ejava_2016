@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Note.findAllNotes", query = "Select n from Note n")
     ,
-@NamedQuery(name = "Note.findAllNotesByUser", query = "Select n from Note n where n.user.userid = :userid")})
+@NamedQuery(name = "Note.findAllNotesByUser", query = "Select n from Note n where n.user.userid = :userid ORDER BY n.datetime DESC")})
 public class Note implements Serializable {
 
     @Id

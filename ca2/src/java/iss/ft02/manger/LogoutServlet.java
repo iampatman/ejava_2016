@@ -16,9 +16,9 @@ public class LogoutServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.invalidate();
-
+                req.logout();
 		getServletContext()
-				.getRequestDispatcher("/faces/login.xhtml")
+				.getRequestDispatcher("/login.xhtml")
 				.forward(req, resp);
 	}
 

@@ -33,8 +33,9 @@ public class NoteDisplaySocket {
 
     private static Set<Session> sessions = ConcurrentHashMap.newKeySet();
 
-    @EJB NotesBean nb;
-    
+    @EJB
+    NotesBean nb;
+
     @OnOpen
     public void open(Session session) {
         System.out.println(">>> new session: " + session.getId());
@@ -50,6 +51,7 @@ public class NoteDisplaySocket {
     }
 
     public static void broadcastNotes(List<Note> notes) {
+        System.out.println("Broadcasting notes to sessions");
         synchronized (sessions) {
             System.out.println("Sending to clients in thread: " + sessions.size());
             if (sessions.isEmpty()) {
@@ -69,5 +71,7 @@ public class NoteDisplaySocket {
                         }
                     });
         }
+        System.out.println("Broadcasted notes to sessions");
+
     }
 }

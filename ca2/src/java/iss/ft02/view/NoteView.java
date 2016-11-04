@@ -15,12 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -29,23 +28,20 @@ import javax.inject.Named;
 @SessionScoped
 @Named
 public class NoteView implements Serializable {
-    
-    
+
     @EJB
     private RegisterBean rb;
-    
+
     @EJB
     private NotesBean nb;
-    
 
     private List<Note> notes = new ArrayList<>();
     private String title;
     private String content;
-    private List<String> categories = Arrays.asList("Social", "ForSale","Jobs","Tuitions");
+    private List<String> categories = Arrays.asList("Social", "ForSale", "Jobs", "Tuitions");
     private String category;
     private User user;
-    
-    
+
     @PostConstruct
     public void NoteView() {
         String name = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
@@ -55,7 +51,7 @@ public class NoteView implements Serializable {
         notes = nb.findAllByUser(user.getUserid());
     }
 
-    public void postNote() { 
+    public void postNote() {
         Note note = new Note();
         note.setTitle(getTitle());
         note.setUser(user);
@@ -69,7 +65,17 @@ public class NoteView implements Serializable {
         NoteDisplaySocket.broadcastNotes(nb.findAll());
     }
 
-    
+    public void logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        try {
+            ((HttpServletRequest) FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequest()).logout();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * @return the nb
      */

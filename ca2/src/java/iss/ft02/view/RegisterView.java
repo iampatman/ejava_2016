@@ -10,6 +10,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @RequestScoped
@@ -39,7 +41,13 @@ public class RegisterView {
     }
 
     public String register() {
-
+        
+        if (registerBean.findUserById(userid) != null){
+            FacesMessage msg = new FacesMessage("Username exists");
+            FacesContext.getCurrentInstance().addMessage("", msg);
+            return "";
+        }
+        
         String pwd = "";
          try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

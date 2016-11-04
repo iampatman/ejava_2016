@@ -15,13 +15,21 @@
             Current user: <h:outputLabel value="#{noteView.user.userid}"/>
         </h2>
         <h:form id="form">
-            <h:panelGrid columns="2">
-                Title <h:inputText value="#{noteView.title}" required="true"/>
+            <h:panelGrid columns="3">
+                Title <h:inputText id="title" requiredMessage="Title is required" maxlength="50" value="#{noteView.title}" required="true"/>
+                <h:message for="title"/>
                 Category 
                 <h:selectOneMenu value="#{noteView.category}">
                     <f:selectItems value="#{noteView.categories}"/>
                 </h:selectOneMenu>
-                Content <h:inputText value="#{noteView.content}" required="true"/>
+                <h:panelGroup/>
+                Content 
+                <h:inputTextarea  id="content" validatorMessage="Required: Max 200 min 1 chars" rows="10" cols="50" requiredMessage="true" value="#{noteView.content}">
+                    <f:validateLength maximum="200" minimum="1"/>
+                </h:inputTextarea>
+                <h:message for="content"/>
+                <h:panelGroup/>
+
                 <h:commandButton value="Post" action="#{noteView.postNote()}">
                     <f:ajax execute="@form" render="@form"></f:ajax>
                 </h:commandButton>
@@ -45,9 +53,15 @@
                     <h:outputText value="#{note.content}"></h:outputText>
                 </h:column>
             </h:dataTable>
+            <br/>
+            
+            
+            <h:commandLink value="Logout" action="#{noteView.logout()}" immediate="true">
+                <f:ajax execute="@all" render="@all"></f:ajax>
+            </h:commandLink>
+
         </h:form>
         		
-        <h1><a href="logout">Logout</a></h1>
 
     </h:body>
 </html>
