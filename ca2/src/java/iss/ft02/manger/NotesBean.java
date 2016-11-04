@@ -7,6 +7,7 @@ package iss.ft02.manger;
 
 import iss.ft02.entity.Note;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,8 +20,11 @@ import javax.persistence.PersistenceContext;
 public class NotesBean {
     @PersistenceContext EntityManager em;
     
+    @EJB SocketBean socket;
+    
     public void add(Note note){
         em.persist(note);
+        socket.sendMessage(note);
     }
     
 

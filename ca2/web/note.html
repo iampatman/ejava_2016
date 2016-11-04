@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Note Display</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- load libs -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+
+        <!-- load app -->
+        <script src="note.js"></script>
+    </head>
+    <body>
+        <div class="container" ng-app="noteApp" ng-controller="noteController">
+            <h1> Note Display </h1>
+            
+            <div class="row">
+                <label class="col-lg-2">
+                    <input type="radio" ng-model="category.value" value="{{ category.type.ALL }}">
+                    All
+                </label>
+                <label class="col-lg-2">
+                    <input type="radio" ng-model="category.value" value="{{ category.type.SOCIAL }}">
+                    Social
+                </label>
+                <label class="col-lg-2">
+                    <input type="radio" ng-model="category.value" value="{{ category.type.FOR_SALE }}">
+                    For Sale
+                </label>
+                <label class="col-lg-2">
+                    <input type="radio" ng-model="category.value" value="{{ category.type.JOBS }}">
+                    Jobs
+                </label>
+                <label class="col-lg-2">
+                    <input type="radio" ng-model="category.value" value="{{ category.type.TUTION }}">
+                    Tuition
+                </label>               
+            </div>
+            
+            {{ category.value }}
+            
+            <table border="1" width="100%">
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date/Time</th>
+                <th>Content</th>
+            </tr>
+            <tr ng-repeat="n in notes">
+                <td>{{ n.title }}</td>
+                <td>{{ n.category }}</td>
+                <td>{{ n.datetime }}</td>
+                <td>{{ n.content }}</td>
+            </tr>
+            <tr>
+                <td>{{ note.title }}</td>
+                <td>{{ note.category }}</td>
+                <td>{{ note.datetime }}</td>
+                <td>{{ note.content }}</td>
+            </tr>
+            </table>
+        </div>
+    </body>
+</html>

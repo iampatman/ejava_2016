@@ -1,0 +1,22 @@
+{
+  "name": "ca2",
+  "homepage": "https://github.com/tran0040/ejava_2016",
+  "authors": [
+    "TranNgocHieu <hieu2608@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8"
+  }
+}

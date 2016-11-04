@@ -10,6 +10,7 @@ import iss.ft02.entity.User;
 import iss.ft02.manger.NotesBean;
 import iss.ft02.manger.RegisterBean;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +61,8 @@ public class NoteView implements Serializable {
         note.setUser(user);
         note.setCategory(getCategory());
         note.setContent(getContent());
+        java.util.Date date= new java.util.Date();
+        note.setDatetime(new Timestamp(date.getTime()));
         nb.add(note);
         notes = nb.findAll();
         title = "";
