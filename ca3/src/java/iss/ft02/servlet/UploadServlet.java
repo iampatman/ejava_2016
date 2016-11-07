@@ -80,7 +80,7 @@ public class UploadServlet extends HttpServlet {
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
         
-        hqBean.createTimer(pod);
+        hqBean.sendFoward(pod);
     }
 
     private byte[] readPart(Part p) throws IOException {
