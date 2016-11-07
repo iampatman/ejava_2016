@@ -19,7 +19,7 @@ public class PodBean {
     @PersistenceContext EntityManager em;
     
     public void add(Pod pod){
-        em.persist(this);
+        em.persist(pod);
     }
     
 }
