@@ -55,9 +55,10 @@ public class DeliveryView {
         System.out.println(">>> delivery " + addedDelivery.getPkg_id());
         
         Pod pod = new Pod();
+        pod.setDeliver(delivery);
+        managerBean.add(delivery, pod);
         pod.setDeliver(addedDelivery);
-        podBean.add(pod);
-        
+        podBean.add(pod);        
         name="";
         address="";
         phone="";

@@ -12,7 +12,8 @@ public class DeliveryBean {
     public Delivery add(Delivery delivery){
         em.persist(delivery);
         em.flush();
-        em.merge(delivery);
-        return delivery;
+        return em.merge(delivery);
     }
+    
+    
 }
