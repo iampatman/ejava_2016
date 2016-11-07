@@ -1,14 +1,16 @@
 package iss.ft02.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "delivery")
-public class Delivery {
+public class Delivery implements Serializable{
     @Id
     private int pkg_id;
     
@@ -17,7 +19,18 @@ public class Delivery {
     private String address;
     private String phone;
     private Timestamp create_date;
-
+//    
+//    @OneToOne(mappedBy = "delivery")
+//    private Pod pod;
+//
+//    public Pod getPod() {
+//        return pod;
+//    }
+//
+//    public void setPod(Pod pod) {
+//        this.pod = pod;
+//    }
+    
     public int getPkg_id() {
         return pkg_id;
     }

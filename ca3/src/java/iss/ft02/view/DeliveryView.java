@@ -46,7 +46,6 @@ public class DeliveryView {
         
         Pod pod = new Pod();
         pod.setDeliver(delivery);
-        
         managerBean.add(delivery, pod);
         
         name="";

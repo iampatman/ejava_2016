@@ -9,7 +9,10 @@ import javax.persistence.PersistenceContext;
 public class DeliveryBean {
     @PersistenceContext EntityManager em;
     
-    public void add(Delivery delivery){
+    public Delivery add(Delivery delivery){
         em.persist(delivery);
+        return em.merge(delivery);
     }
+    
+    
 }
