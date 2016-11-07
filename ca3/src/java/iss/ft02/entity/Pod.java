@@ -7,10 +7,13 @@ package iss.ft02.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,6 +33,9 @@ public class Pod implements Serializable{
     private Delivery deliver;
     
     private String note;
+    
+    @Lob 
+    @Basic(fetch=FetchType.LAZY)
     private byte[] image;
     @Column(name="delivery_date")
     private Timestamp deliveryDate;
