@@ -79,12 +79,9 @@ public class UploadServlet extends HttpServlet {
         System.out.println(">>>>>>>>>> image size: " + image.length);
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
-//<<<<<<< HEAD
-        hqBean.foward(pod);
-//=======
-//        
-//        hqBean.createTimer(pod);
-//>>>>>>> 17468e2afaf5970c1eb8b54669a158d7c4e9776f
+
+//        hqBean.sendFoward(pod);
+
     }
 
     private byte[] readPart(Part p) throws IOException {

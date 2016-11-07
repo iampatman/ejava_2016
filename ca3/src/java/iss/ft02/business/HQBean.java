@@ -6,6 +6,7 @@
 package iss.ft02.business;
 
 import iss.ft02.entity.Pod;
+//<<<<<<< HEAD
 import iss.ft02.servlet.Callback;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -15,26 +16,28 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
+//=======
+//>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
 import java.util.Optional;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.Schedule;
-import javax.ejb.ScheduleExpression;
 import javax.ejb.Stateless;
+//<<<<<<< HEAD
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerHandle;
 import javax.ejb.TimerService;
 import javax.imageio.ImageIO;
+//=======
+//>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+//<<<<<<< HEAD
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
@@ -43,6 +46,11 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
+//=======
+//import org.glassfish.jersey.media.multipart.MultiPart;
+//import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
+//
+//>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
 
 /**
  *
@@ -53,7 +61,8 @@ public class HQBean {
 
     private Client client = ClientBuilder.newClient();
 //<<<<<<< HEAD
-    @Resource TimerService timerService;
+//<<<<<<< HEAD
+//    @Resource TimerService timerService;
     public void foward(Pod pod) throws FileNotFoundException, IOException{
         String url = "10.10.0.50:8080/epod/upload";
 //        UriBuilder builder = UriBuilder.fromResource(Callback.class);
@@ -135,6 +144,34 @@ public class HQBean {
 //            } 
 //        }
 //>>>>>>> 17468e2afaf5970c1eb8b54669a158d7c4e9776f
+//=======
+//    @EJB PodBean podBean;
+//    
+//    public void sendFoward(Pod pod) {
+//        System.out.println("Send foward is called");
+//        System.out.println("Timer ticks");        
+//
+//        Optional<Pod> optional = podBean.find(pod.getPodId());
+//        if (optional.isPresent()){
+//            pod = optional.get();
+//        }
+//        String url = "10.10.0.50:8080/epod";
+//        String callback = "http://10.10.24.173:8080/epod/callback";
+//        WebTarget target = client.target(url);
+//        MultiPart part = new MultiPart();
+//        FileDataBodyPart file = new FileDataBodyPart();
+//        
+//        MultivaluedMap<String, String> form = new MultivaluedHashMap<>();
+//        
+//        form.add("teamId", "hellohihi");
+//        form.add("podId", String.valueOf(pod.getPodId()));
+//        form.add("callback", callback);
+//        form.add("note", pod.getNote());
+//        form.add("image", pod.getImage().toString());
+//                target.request(MediaType.MULTIPART_FORM_DATA_TYPE)
+//                .post(Entity.form(form));
+//>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
     }
+
 }
 
