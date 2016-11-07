@@ -17,11 +17,13 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerHandle;
 import javax.ejb.TimerService;
+import javax.mail.Multipart;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -58,13 +60,15 @@ public class HQBean {
         String url = "10.10.0.50:8080/epod";
         String callback = "http://10.10.24.173:8080/epod/callback";
         WebTarget target = client.target(url);
+        
         MultivaluedMap<String, String> form = new MultivaluedHashMap<>();
+        
         form.add("teamId", "hellohihi");
         form.add("podId", String.valueOf(pod.getPodId()));
         form.add("callback", callback);
         form.add("note", pod.getNote());
-        
-        target.request(MediaType.APPLICATION_FORM_URLENCODED)
+        form.add("image", pod.getImage().toString());
+                target.request(MediaType.MULTIPART_FORM_DATA_TYPE)
                 .post(Entity.form(form));
     }
 
