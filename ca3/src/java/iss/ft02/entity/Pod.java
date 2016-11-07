@@ -125,7 +125,8 @@ public class Pod implements Serializable{
     public void setAckId(String ackId) {
         this.ackId = ackId;
     }
-    
-    
-    
+    @Override
+    public String toString(){
+        return " >>>>>>>>> " + podId + " " + note;
+    }
 }

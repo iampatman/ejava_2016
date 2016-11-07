@@ -5,11 +5,15 @@
  */
 package iss.ft02.servlet;
 
+import iss.ft02.business.PodBean;
+import iss.ft02.entity.Pod;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +29,7 @@ import javax.servlet.http.Part;
 @WebServlet(name = "UploadServlet", urlPatterns = {"/upload"})
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
-
+    @EJB PodBean podBean;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -52,10 +56,21 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = new String(readPart(request.getPart("image")));
-        byte[] file = readPart(request.getPart("image"));
-
-
+        String note = new String(readPart(request.getPart("note")));
+        String time = new String(readPart(request.getPart("time")));
+        String podId = new String(readPart(request.getPart("podId")));                
+        byte[] image = readPart(request.getPart("image"));
+        Pod pod = new Pod();
+        pod.setImage(image);
+        pod.setPodId(Integer.valueOf(podId));
+        pod.setNote(note);
+        //pod.setDeliveryDate(Timestamp.valueOf(time));
+        System.out.println(">>>>>>>>>> image size: " + image.length);
+        System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
+        
+        try (PrintWriter pw = response.getWriter()){
+            pw.print(pod.toString());
+        }
     }
 
     private byte[] readPart(Part p) throws IOException {
