@@ -34,7 +34,7 @@ public class Items {
             pods.stream()
                     .forEach(e -> { builder.add(Json.createObjectBuilder()
                                            .add("teamId", "8db3c30e")
-                                           .add("podId", e.getPodId())
+                                           .add("podId", new Long(e.getPodId()))
                                            .add("address", e.getDeliver().getAddress())
                                            .add("name", e.getDeliver().getName())
                                            .add("phone", e.getDeliver().getPhone())

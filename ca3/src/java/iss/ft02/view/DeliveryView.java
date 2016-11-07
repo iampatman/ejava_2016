@@ -50,16 +50,11 @@ public class DeliveryView {
     
     public void addDelivery() {
         Delivery delivery = new Delivery();
-        try {
-        
         delivery.setName(name);
         delivery.setAddress(address);
         delivery.setPhone(phone);
         deliveryBean.add(delivery);
-        } catch (Exception ex){
-            
-        }
-        delivery = deliveryBean.findByName(name);
+
         Pod pod = new Pod();
         pod.setDeliver(delivery);
         podBean.add(pod);      
