@@ -27,14 +27,18 @@ public class Forwarding implements Runnable {
             List<Pod> pods = podBean.findAllPod();
             pods.stream().
                     filter((t) -> {
-                        System.out.println("result:"+t.getNote() != null && t.getAckId() == null);
+                        System.out.println("result:"+t.getDeliver().getName()+" "+t.getNote() != null && t.getAckId() == null);
                         return t.getNote() != null && t.getAckId() == null; //To change body of generated lambdas, choose Tools | Templates.
                     }).forEach(pod -> {
-//                hqBean.sendFoward(pod);
+                        try {
+                hqBean.foward(pod);
+                        } catch (Exception ex){
+                            ex.printStackTrace();
+                        }
             }
             );
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

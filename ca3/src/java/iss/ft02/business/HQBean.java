@@ -40,17 +40,13 @@ import javax.ws.rs.core.MultivaluedMap;
 //<<<<<<< HEAD
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import org.glassfish.jersey.media.multipart.BodyPart;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
-//=======
-//import org.glassfish.jersey.media.multipart.MultiPart;
-//import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
-//
-//>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
 
 /**
  *
@@ -64,10 +60,9 @@ public class HQBean {
 //<<<<<<< HEAD
 //    @Resource TimerService timerService;
     public void foward(Pod pod) throws FileNotFoundException, IOException{
-        String url = "10.10.0.50:8080/epod/upload";
-//        UriBuilder builder = UriBuilder.fromResource(Callback.class);
-//        String callback = builder.scheme("http").host("{server}").port("{port}");
-        String callback = "http://10.10.24.154:8080/epod/callback";
+        String url = "http://10.10.0.50:8080/epod/upload";
+
+        String callback = "http://10.10.24.173:8080/epod/callback";
         System.out.println(">>> Start forwarding to HQ");
         Client client = ClientBuilder.newBuilder()
                                     .register(MultiPartFeature.class)
@@ -75,26 +70,34 @@ public class HQBean {
         
         MultiPart multiPart = new MultiPart();
         
-        FileOutputStream fos = new FileOutputStream(pod.getDeliver().getName());
+        File imageFile = new File("image.jpg");
+        FileOutputStream fos = new FileOutputStream(imageFile);
         fos.write(pod.getImage());
+        fos.flush();
         fos.close();
         
         FileDataBodyPart imgPart = new FileDataBodyPart("image",
-                                            new File(pod.getDeliver().getName()),
+                                            imageFile,
                                             MediaType.APPLICATION_OCTET_STREAM_TYPE);
-        imgPart.setContentDisposition(FormDataContentDisposition.name("image").fileName("ca3.png").build());
+        imgPart.setContentDisposition(FormDataContentDisposition.name("image")
+                .fileName(imageFile.getName())
+                .build());
+        System.out.println(">>> Image file" + imageFile.getAbsolutePath());
         MultiPart formPart = new FormDataMultiPart()
                                                     .field("teamId", "8db3c30e", MediaType.TEXT_PLAIN_TYPE)
                                                     .field("podId", String.valueOf(pod.getPodId()), MediaType.TEXT_PLAIN_TYPE)
                                                     .field("callback", callback, MediaType.TEXT_PLAIN_TYPE)
                                                     .field("note", pod.getNote(), MediaType.TEXT_PLAIN_TYPE)
                                                     .bodyPart(imgPart);
+//                                                    .bodyPart(new BodyPart(pod.getImage(), MediaType.APPLICATION_OCTET_STREAM_TYPE)
+//                                                            .setContentDisposition(FormDataContentDisposition.name("image")
+//                                                                    .fileName("image.png")
+//                                                                    .build()))
         formPart.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
         multiPart.bodyPart(formPart);
         
         System.out.println(">>> BodyPart form: " + formPart.toString());
-//        Invocation.Builder request = target.request(MediaType.APPLICATION_FORM_URLENCODED)
-//                .post(Entity.form(form), Response.class);
+
         WebTarget target = client.target(url);
         
         Invocation.Builder inv = target.request();

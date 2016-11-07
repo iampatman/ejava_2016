@@ -79,8 +79,9 @@ public class UploadServlet extends HttpServlet {
         System.out.println(">>>>>>>>>> image size: " + image.length);
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
-
-//        hqBean.sendFoward(pod);
+        hqBean.foward(pod);
+        
+        
 
     }
 
