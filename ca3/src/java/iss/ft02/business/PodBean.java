@@ -6,6 +6,7 @@
 package iss.ft02.business;
 
 import iss.ft02.entity.Pod;
+import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,5 +31,10 @@ public class PodBean {
     
     public Optional<Pod> find(int podId){
         return Optional.ofNullable(em.find(Pod.class, podId));
+    }
+    
+    public List<Pod> findAllPod() {
+        return em.createQuery("select p from Pod", Pod.class)
+                 .getResultList();
     }
 }
