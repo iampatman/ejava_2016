@@ -2,8 +2,10 @@ package iss.ft02.entity;
 
 import java.sql.Timestamp;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,10 @@ public class Delivery {
     private String address;
     private String phone;
     private Timestamp create_date;
+    
+    @OneToOne(mappedBy = "deliver")
+    private Pod pod;
+    
 
     public int getPkg_id() {
         return pkg_id;

@@ -1,6 +1,8 @@
 package iss.ft02.view;
 
+import iss.ft02.business.DeliveryBean;
 import iss.ft02.business.ManagerBean;
+import iss.ft02.business.PodBean;
 import iss.ft02.entity.Delivery;
 import iss.ft02.entity.Pod;
 import javax.ejb.EJB;
@@ -12,6 +14,12 @@ import javax.inject.Named;
 public class DeliveryView {
     @EJB
     private ManagerBean managerBean;
+    
+    @EJB
+    private PodBean podBean;
+    
+    @EJB
+    private DeliveryBean deliveryBean;
     
     private String name;
     private String address;
@@ -43,11 +51,12 @@ public class DeliveryView {
         delivery.setName(name);
         delivery.setAddress(address);
         delivery.setPhone(phone);
+        Delivery addedDelivery = deliveryBean.add(delivery);
+        System.out.println(">>> delivery " + addedDelivery.getPkg_id());
         
         Pod pod = new Pod();
-        pod.setDeliver(delivery);
-        
-        managerBean.add(delivery, pod);
+        pod.setDeliver(addedDelivery);
+        podBean.add(pod);
         
         name="";
         address="";
