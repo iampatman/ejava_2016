@@ -7,13 +7,18 @@ package iss.ft02.servlet;
 
 import iss.ft02.business.PodBean;
 import iss.ft02.entity.Pod;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.Optional;
 import javax.ejb.EJB;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -57,11 +62,17 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String podId = new String(readPart(request.getPart("podId")));                
+        Optional<Pod> optional = podBean.find(Integer.valueOf(podId));
+        if (!optional.isPresent()){
+            return;
+        }
+        
         String note = new String(readPart(request.getPart("note")));
         String time = new String(readPart(request.getPart("time")));
-        String podId = new String(readPart(request.getPart("podId")));                
         byte[] image = readPart(request.getPart("image"));
-        Pod pod = new Pod();
+        Pod pod = optional.get();
+        //BufferedImage img = ImageIO.read(new ByteArrayInputStream(image));
         pod.setImage(image);
         pod.setPodId(Integer.valueOf(podId));
         pod.setNote(note);
@@ -70,10 +81,7 @@ public class UploadServlet extends HttpServlet {
         System.out.println(">>>>>>>>>> image size: " + image.length);
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
-//        
-//        try (PrintWriter pw = response.getWriter()){
-//            pw.print(pod.toString());
-//        }
+
         
     }
 

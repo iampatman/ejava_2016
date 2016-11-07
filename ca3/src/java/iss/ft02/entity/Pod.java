@@ -5,6 +5,7 @@
  */
 package iss.ft02.entity;
 
+import java.awt.Image;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Basic;
@@ -34,9 +35,10 @@ public class Pod implements Serializable{
     
     private String note;
     
-    @Lob 
-    @Basic(fetch=FetchType.LAZY)
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length=10000000)
     private byte[] image;
+    
     @Column(name="delivery_date")
     private Timestamp deliveryDate;
     @Column(name="ack_id")
@@ -48,6 +50,22 @@ public class Pod implements Serializable{
     public int getPodId() {
         return podId;
     }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+//    public Image getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Image image) {
+//        this.image = image;
+//    }
 
     /**
      * @param podId the podId to set
@@ -87,16 +105,7 @@ public class Pod implements Serializable{
     /**
      * @return the image
      */
-    public byte[] getImage() {
-        return image;
-    }
-
-    /**
-     * @param image the image to set
-     */
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+    
 
     /**
      * @return the deliveryDate
