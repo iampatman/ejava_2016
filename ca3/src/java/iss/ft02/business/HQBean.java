@@ -6,15 +6,9 @@
 package iss.ft02.business;
 
 import iss.ft02.entity.Pod;
-import java.io.File;
-import java.nio.file.Files;
 import java.util.Optional;
-import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.Timeout;
-import javax.ejb.Timer;
-import javax.ejb.TimerService;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -23,8 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import org.glassfish.jersey.media.multipart.MultiPart;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
+
 
 /**
  *
@@ -39,7 +33,6 @@ public class HQBean {
     public void sendFoward(Pod pod) {
         System.out.println("Send foward is called");
         System.out.println("Timer ticks");        
-        Files.write(pod.getImage(), new File("image"));
 
         Optional<Pod> optional = podBean.find(pod.getPodId());
         if (optional.isPresent()){

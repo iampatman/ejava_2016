@@ -52,10 +52,11 @@ public class Callback extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {    
         System.out.println(">>>>>>>>> callback received");
         String podId = request.getParameter("podId");
         String ackId = request.getParameter("ackId");
+        System.out.println(">>> Receive callback podId " + podId + ", ackId " + ackId);
         Optional<Pod> optional = podBean.find(Integer.valueOf(podId));
         if (optional.isPresent()){
             Pod pod = optional.get();

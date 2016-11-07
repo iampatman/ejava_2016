@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener
 public class ServletContext implements ServletContextListener{
-    @Resource private ManagedExecutorService executor;
+    @Resource(lookup = "concurrent/myThreadpool") private ManagedExecutorService executor;
     private Forwarding fwd = new Forwarding();
     @Override 
     public void contextInitialized(ServletContextEvent sce) {        
