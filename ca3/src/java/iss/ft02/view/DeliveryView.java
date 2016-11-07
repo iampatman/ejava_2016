@@ -44,5 +44,8 @@ public class DeliveryView {
         delivery.setPhone(phone);
         
         deliveryBean.add(delivery);
+        name="";
+        address="";
+        phone="";
     }
 }
