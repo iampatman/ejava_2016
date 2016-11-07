@@ -1,7 +1,8 @@
 package iss.ft02.view;
 
-import iss.ft02.business.DeliveryBean;
+import iss.ft02.business.ManagerBean;
 import iss.ft02.entity.Delivery;
+import iss.ft02.entity.Pod;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -10,7 +11,7 @@ import javax.inject.Named;
 @Named
 public class DeliveryView {
     @EJB
-    private DeliveryBean deliveryBean;
+    private ManagerBean managerBean;
     
     private String name;
     private String address;
@@ -43,7 +44,11 @@ public class DeliveryView {
         delivery.setAddress(address);
         delivery.setPhone(phone);
         
-        deliveryBean.add(delivery);
+        Pod pod = new Pod();
+        pod.setDeliver(delivery);
+        
+        managerBean.add(delivery, pod);
+        
         name="";
         address="";
         phone="";

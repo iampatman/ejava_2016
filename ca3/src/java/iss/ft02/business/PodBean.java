@@ -21,9 +21,11 @@ public class PodBean {
     
     public void add(Pod pod){
         em.persist(pod);
+
     }
     public void update(Pod pod){
         em.merge(pod);
+
     }
     
     public Optional<Pod> find(int podId){
