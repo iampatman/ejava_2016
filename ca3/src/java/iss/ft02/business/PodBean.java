@@ -34,7 +34,7 @@ public class PodBean {
     }
     
     public List<Pod> findAllPod() {
-        return em.createQuery("select p from Pod", Pod.class)
+        return em.createQuery("select p from Pod p", Pod.class)
                  .getResultList();
     }
 }
