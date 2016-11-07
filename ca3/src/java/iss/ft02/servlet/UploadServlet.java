@@ -65,7 +65,8 @@ public class UploadServlet extends HttpServlet {
         pod.setImage(image);
         pod.setPodId(Integer.valueOf(podId));
         pod.setNote(note);
-        pod.setDeliveryDate(Timestamp.valueOf(time));
+        System.out.println(">>>> Time: " + time);
+        pod.setDeliveryDate(new Timestamp(Long.valueOf(time)));
         System.out.println(">>>>>>>>>> image size: " + image.length);
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
