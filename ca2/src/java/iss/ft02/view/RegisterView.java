@@ -19,11 +19,11 @@ import javax.inject.Named;
 public class RegisterView {
     private String userid;
     private String password;
-    
+
     @EJB
     RegisterBean registerBean;
-    
-    @EJB 
+
+    @EJB
     private GroupBean groupBean;
 
     public String getUserid() {
@@ -41,13 +41,13 @@ public class RegisterView {
     }
 
     public String register() {
-        
+
         if (registerBean.findUserById(userid) != null){
             FacesMessage msg = new FacesMessage("Username exists");
             FacesContext.getCurrentInstance().addMessage("", msg);
             return "";
         }
-        
+
         String pwd = "";
          try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -73,5 +73,5 @@ public class RegisterView {
         userid = "";
         password = "";
         return "login";
-    } 
+    }
 }
