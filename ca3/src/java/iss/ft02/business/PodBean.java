@@ -6,6 +6,7 @@
 package iss.ft02.business;
 
 import iss.ft02.entity.Pod;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,14 @@ public class PodBean {
     
     public void add(Pod pod){
         em.persist(pod);
+
+    }
+    public void update(Pod pod){
+        em.merge(pod);
+
     }
     
+    public Optional<Pod> find(int podId){
+        return Optional.ofNullable(em.find(Pod.class, podId));
+    }
 }
