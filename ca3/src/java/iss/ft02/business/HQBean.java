@@ -7,26 +7,12 @@ package iss.ft02.business;
 
 import iss.ft02.entity.Pod;
 //<<<<<<< HEAD
-import iss.ft02.servlet.Callback;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.sql.Timestamp;
-//=======
-//>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
-import java.util.Optional;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 //<<<<<<< HEAD
-import javax.ejb.Timeout;
-import javax.ejb.Timer;
-import javax.ejb.TimerHandle;
-import javax.ejb.TimerService;
-import javax.imageio.ImageIO;
 //=======
 //>>>>>>> 2f91d4b0bb777b4db0ab3f4977689be770106f30
 import javax.ws.rs.client.Client;
@@ -35,13 +21,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 //<<<<<<< HEAD
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import org.glassfish.jersey.media.multipart.BodyPart;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
@@ -89,10 +70,7 @@ public class HQBean {
                                                     .field("callback", callback, MediaType.TEXT_PLAIN_TYPE)
                                                     .field("note", pod.getNote(), MediaType.TEXT_PLAIN_TYPE)
                                                     .bodyPart(imgPart);
-//                                                    .bodyPart(new BodyPart(pod.getImage(), MediaType.APPLICATION_OCTET_STREAM_TYPE)
-//                                                            .setContentDisposition(FormDataContentDisposition.name("image")
-//                                                                    .fileName("image.png")
-//                                                                    .build()))
+
         formPart.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
         multiPart.bodyPart(formPart);
         

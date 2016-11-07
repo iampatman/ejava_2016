@@ -1,7 +1,12 @@
 
 import iss.ft02.business.Forwarding;
+import iss.ft02.business.HQBean;
+import iss.ft02.business.PodBean;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.enterprise.concurrent.ManagedExecutorService;
+import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -18,12 +23,19 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener
 public class ServletContext implements ServletContextListener{
-    @Resource(lookup = "concurrent/myThreadpool") private ManagedExecutorService executor;
-    private Forwarding fwd = new Forwarding();
+    
+    @EJB
+    PodBean podBean;
+    @EJB
+    HQBean hqBean;
+    
+    @Resource(lookup = "concurrent/myThreadPool") private ManagedScheduledExecutorService executor;
+    private Forwarding fwd = null; 
     @Override 
-    public void contextInitialized(ServletContextEvent sce) {        
+    public void contextInitialized(ServletContextEvent sce) {  
+        fwd = new Forwarding(podBean, hqBean);
         System.out.println("contextInitialized");
-        executor.execute(fwd);
+        executor.scheduleAtFixedRate(fwd,0, 5, TimeUnit.SECONDS);
     }
 
     @Override

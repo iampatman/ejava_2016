@@ -15,34 +15,32 @@ import javax.ejb.EJB;
  */
 public class Forwarding implements Runnable {
 
-    @EJB
     PodBean podBean;
-    @EJB
     HQBean hqBean;
-
+    
+    public Forwarding(PodBean podBean, HQBean hqBean){
+        this.podBean = podBean;
+        this.hqBean = hqBean;
+    }
     @Override
     public void run() {
-        while (true) {
-            System.out.println("New round check" + System.currentTimeMillis()/1000);
-            List<Pod> pods = podBean.findAllPod();
-            pods.stream().
-                    filter((t) -> {
-                        System.out.println("result:"+t.getDeliver().getName()+" "+t.getNote() != null && t.getAckId() == null);
-                        return t.getNote() != null && t.getAckId() == null; //To change body of generated lambdas, choose Tools | Templates.
-                    }).forEach(pod -> {
-                        try {
-                hqBean.foward(pod);
-                        } catch (Exception ex){
-                            ex.printStackTrace();
-                        }
-            }
-            );
+        System.out.println("Thread started");
+        System.out.println("New round check" + System.currentTimeMillis() / 1000);
+        List<Pod> pods = podBean.findAllPod();
+        pods.stream().
+                filter((t) -> {
+                    System.out.println("result:" + t.getDeliver().getName() + " " + t.getNote() != null && t.getAckId() == null);
+                    return t.getAckId() == null; //To change body of generated lambdas, choose Tools | Templates.
+                }).forEach(pod -> {
             try {
-                Thread.sleep(5);
+                hqBean.foward(pod);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
+        );
+        System.out.println("Thread stop");
+
     }
 
 }
