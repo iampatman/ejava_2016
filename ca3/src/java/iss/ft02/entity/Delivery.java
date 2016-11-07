@@ -22,8 +22,8 @@ public class Delivery implements Serializable{
     private Timestamp create_date;
 
     
-    @OneToOne(mappedBy = "deliver")
-    private Pod pod;
+//    @OneToOne(mappedBy = "deliver")
+//    private Pod pod;
     
 
     public int getPkg_id() {

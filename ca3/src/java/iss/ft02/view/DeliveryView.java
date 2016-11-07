@@ -5,16 +5,18 @@ import iss.ft02.business.ManagerBean;
 import iss.ft02.business.PodBean;
 import iss.ft02.entity.Delivery;
 import iss.ft02.entity.Pod;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.TransactionManagement;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.transaction.UserTransaction;
 
 @RequestScoped
 @Named
 public class DeliveryView {
-    @EJB
-    private ManagerBean managerBean;
-    
+    @Resource UserTransaction ut;
+
     @EJB
     private PodBean podBean;
     
@@ -48,17 +50,20 @@ public class DeliveryView {
     
     public void addDelivery() {
         Delivery delivery = new Delivery();
+        try {
+        
         delivery.setName(name);
         delivery.setAddress(address);
         delivery.setPhone(phone);
-        Delivery addedDelivery = deliveryBean.add(delivery);
-        System.out.println(">>> delivery " + addedDelivery.getPkg_id());
-        
+        deliveryBean.add(delivery);
+        } catch (Exception ex){
+            
+        }
+        delivery = deliveryBean.findByName(name);
         Pod pod = new Pod();
         pod.setDeliver(delivery);
-        managerBean.add(delivery, pod);
-        pod.setDeliver(addedDelivery);
-        podBean.add(pod);        
+        podBean.add(pod);      
+        
         name="";
         address="";
         phone="";
