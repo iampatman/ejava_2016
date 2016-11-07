@@ -14,8 +14,10 @@ public class DeliveryBean {
     
     public void add(Delivery delivery){
         em.persist(delivery);
+        em.flush();
+        System.out.println(">>>>>>>>>>>> pkgid " + delivery.getPkg_id());
     }    
-    
+   
     public Delivery findByName(String name){
         Delivery result = em.createQuery("Select d from Delivery d where :name = d.name", Delivery.class)
                 .setParameter("name", name)
