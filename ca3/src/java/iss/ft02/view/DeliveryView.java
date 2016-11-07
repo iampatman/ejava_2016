@@ -1,7 +1,6 @@
 package iss.ft02.view;
 
 import iss.ft02.business.DeliveryBean;
-import iss.ft02.business.ManagerBean;
 import iss.ft02.business.PodBean;
 import iss.ft02.entity.Delivery;
 import iss.ft02.entity.Pod;

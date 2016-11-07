@@ -5,6 +5,7 @@
  */
 package iss.ft02.servlet;
 
+import iss.ft02.business.HQBean;
 import iss.ft02.business.PodBean;
 import iss.ft02.entity.Pod;
 import java.awt.Image;
@@ -35,6 +36,7 @@ import javax.servlet.http.Part;
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
     @EJB PodBean podBean;
+    @EJB HQBean hqBean;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -81,8 +83,7 @@ public class UploadServlet extends HttpServlet {
         System.out.println(">>>>>>>>>> image size: " + image.length);
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
-
-        
+        hqBean.foward(pod);
     }
 
     private byte[] readPart(Part p) throws IOException {
