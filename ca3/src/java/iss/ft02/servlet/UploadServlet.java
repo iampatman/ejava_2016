@@ -8,10 +8,7 @@ package iss.ft02.servlet;
 import iss.ft02.business.HQBean;
 import iss.ft02.business.PodBean;
 import iss.ft02.entity.Pod;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +16,6 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Optional;
 import javax.ejb.EJB;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -83,7 +79,12 @@ public class UploadServlet extends HttpServlet {
         System.out.println(">>>>>>>>>> image size: " + image.length);
         System.out.println(" >>>>>>>>>>> new pod: " + pod.toString());
         podBean.update(pod);
+//<<<<<<< HEAD
         hqBean.foward(pod);
+//=======
+//        
+//        hqBean.createTimer(pod);
+//>>>>>>> 17468e2afaf5970c1eb8b54669a158d7c4e9776f
     }
 
     private byte[] readPart(Part p) throws IOException {

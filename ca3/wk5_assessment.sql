@@ -26,7 +26,7 @@ create table pod (
 	pkg_id mediumint not null,
 	note text, 
 	-- image of package on delivery
-	image blob,
+	image longblob,
 	delivery_date timestamp,
 	-- acknowledgement id received from HQ
 	ack_id varchar(16),

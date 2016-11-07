@@ -6,7 +6,6 @@ import iss.ft02.entity.Delivery;
 import iss.ft02.entity.Pod;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.TransactionManagement;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.transaction.UserTransaction;

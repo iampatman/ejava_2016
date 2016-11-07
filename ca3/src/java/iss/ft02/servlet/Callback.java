@@ -53,6 +53,7 @@ public class Callback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {    
+        System.out.println(">>>>>>>>> callback received");
         String podId = request.getParameter("podId");
         String ackId = request.getParameter("ackId");
         System.out.println(">>> Receive callback podId " + podId + ", ackId " + ackId);
@@ -62,7 +63,6 @@ public class Callback extends HttpServlet {
             pod.setAckId(ackId);
             podBean.update(pod);
         }
-
     }
 
     /**
