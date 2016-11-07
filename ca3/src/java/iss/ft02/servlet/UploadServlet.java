@@ -77,7 +77,7 @@ public class UploadServlet extends HttpServlet {
     }
 
     private byte[] readPart(Part p) throws IOException {
-        byte[] buffer = new byte[1024 * 8];
+        byte[] buffer = new byte[1024 * 20];
         int sz = 0;
         try (InputStream is = p.getInputStream()) {
             //Get the part using the name
