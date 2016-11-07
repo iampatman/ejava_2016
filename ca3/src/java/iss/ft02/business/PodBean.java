@@ -8,6 +8,8 @@ package iss.ft02.business;
 import iss.ft02.entity.Pod;
 import java.util.Optional;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +18,7 @@ import javax.persistence.PersistenceContext;
  * @author NguyenTrung
  */
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class PodBean {
     @PersistenceContext EntityManager em;
     
